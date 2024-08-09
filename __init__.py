@@ -25,12 +25,10 @@ class Text:
     def line_is_null(self, line):
         return re.match(pattern, line) is not None
 
-    def text_to_dict(self, text):
-        # tratamentos de string
+    def text_to_html(self, text):
         text = text.strip() \
         .split("\n")
         new_text = [line for line in text if not self.line_is_null(line)]
-        
         columns = [column.strip() for column in new_text[0].split("|")]
         new_text.pop(0)
         columns.pop(-1)
@@ -79,14 +77,16 @@ class Text:
 </body>
 </html>
         '''
-        ui.message(html)
+        return html
 
 
 text = Text()
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     def script_Char(self, gesture):
         selected = text.selected_text()
-        text.text_to_dict(selected)
+        webpage = text.text_to_html(selected)
+        
+
 
 
     __gestures = {
